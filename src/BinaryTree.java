@@ -1,5 +1,5 @@
 
-public abstract class BinaryTree {
+public class BinaryTree {
 	
 	private Node tree[];
 	private int count;
@@ -14,7 +14,7 @@ public abstract class BinaryTree {
 	}
 	
 	//Properties of Tree
-	public int size(){return tree.length;}
+	public int size(){return count;}
 	public boolean isEmpty(){return  (count == 0) ?true:false;}
 	
 	//Node properties of Tree
@@ -28,19 +28,6 @@ public abstract class BinaryTree {
 			return tree[p.getRank()/2];
 		else
 			return tree[(p.getRank()-1)/2];
-	}
-
-	public Node[] children(Node p)
-	{
-		if(count == 0 || count == 1)
-			return null;
-		int pos;
-		for(pos = 1; pos <= count; pos++)
-			for(pos = 1; pos <= count ; pos++)
-				if(tree[pos].equals(p))
-					break;
-		//Node[] childs = new Node[count -]
-		return null;
 	}
 	
 	//Boolean properties of Tree
@@ -70,29 +57,17 @@ public abstract class BinaryTree {
 	//update/insert method
 	public void insert(Node p)
 	{
-		boolean found = false;
-		for(int i = 1; i <= count; i++)
-		{
-			if(tree[i].equals(p))
+			count++;//raise the counter by one
+			p.setRank(count);//set the rank of the Node p
+			tree[count] = p;//insert the node in the array
+			if(count * 2 >= max)//if count > max, then create a new array with double the size of the old array and fill it up with the values of the old array.
 			{
-				found = true;
-				break;
-			}
-		}
-		if(!found)
-		{
-			count++;
-			p.setRank(count);
-			tree[count] = p;
-			if(count * 2 >= max)
-			{
-				max *= max;
+				max *= 2;
 				Node auxTree[] = new Node[max];
-				for(int i = 0; i < count; i++)
+				for(int i = 1; i <= count; i++)
 					auxTree[i] = tree[i];
 				this.tree = auxTree;
 			}
-		}	
 	}
 	public Node replace(Node p, Node e)
 	{
@@ -149,5 +124,6 @@ public abstract class BinaryTree {
 	public void setTree(Node[] oTree){tree = oTree;}
 	public void setMax(int oMax){max =  oMax;}
 	public void setCount(){count++;}
+	public void setCount(int oCount){count = oCount;}
 	
 }
